@@ -9,7 +9,6 @@ API_KEY = os.getenv("API_KEY", "123456")
 
 limiter = Limiter(get_remote_address, app=app, default_limits=["10 per minute"])
 
-# Comptage simple en mémoire (juste pour démo)
 stats = {"200": 0, "403": 0, "404": 0}
 
 @app.route('/')
@@ -28,7 +27,7 @@ def secret():
         return jsonify({"message": "Accès refusé !"}), 403
 @app.errorhandler(404)
 def page_not_found(e):
-    stats["404"] += 1       # <--- AJOUT
+    stats["404"] += 1       
     return "Page non trouvée", 404
 @app.route('/dashboard')
 def dashboard():
@@ -37,4 +36,3 @@ def dashboard():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
-
