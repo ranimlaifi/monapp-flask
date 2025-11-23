@@ -1,0 +1,33 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #8A2BE2, #00BFFF);
+    color: white;
+    text-align: center;
+    padding-top: 100px;
+}
+
+header h1 {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+header p {
+    font-size: 20px;
+    margin-bottom: 40px;
+}
+
+.btn {
+    padding: 15px 30px;
+    background: white;
+    color: black;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 20px;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: black;
+    color: white;
+}
