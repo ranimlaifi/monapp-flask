@@ -5,54 +5,60 @@
 <title>Dashboard Sécurité Cloud</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body class="bg-gradient-to-r from-blue-300 via-purple-400 to-indigo-500">
-<div class="container py-5">
-    <h1 class="text-white animate__animated animate__fadeInDown">Dashboard Sécurité PaaS</h1>
-    <p class="text-white animate__animated animate__fadeInUp">Suivi des accès API et sécurité cloud</p>
+<body>
+    <!-- Nuages animés -->
+    <img src="{{ url_for('static', filename='img/cloud1.png') }}" class="cloud">
+    <img src="{{ url_for('static', filename='img/cloud2.png') }}" class="cloud">
+    <img src="{{ url_for('static', filename='img/cloud3.png') }}" class="cloud">
 
-    <div class="row mt-4">
-        <div class="col-md-4">
-            <div class="card p-3 text-center bg-success text-white animate__animated animate__bounceIn">
-                <h3>✅ Accès Autorisé</h3>
-                <p id="count-200">{{ stats['200'] }}</p>
+    <div class="container py-5">
+        <h1 class="text-white text-center animate__animated animate__fadeInDown">Dashboard Sécurité PaaS</h1>
+        <p class="text-white text-center animate__animated animate__fadeInUp">Suivi des accès API et sécurité cloud</p>
+
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <div class="card p-3 text-center bg-success text-white animate__animated animate__bounceIn">
+                    <h3>✅ Accès Autorisé</h3>
+                    <p id="count-200">{{ stats['200'] }}</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-3 text-center bg-danger text-white animate__animated animate__bounceIn">
+                    <h3>❌ Accès Refusé</h3>
+                    <p id="count-403">{{ stats['403'] }}</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-3 text-center bg-warning text-dark animate__animated animate__bounceIn">
+                    <h3>❓ Page Non Trouvée</h3>
+                    <p id="count-404">{{ stats['404'] }}</p>
+                </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card p-3 text-center bg-danger text-white animate__animated animate__bounceIn">
-                <h3>❌ Accès Refusé</h3>
-                <p id="count-403">{{ stats['403'] }}</p>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card p-3 text-center bg-warning text-dark animate__animated animate__bounceIn">
-                <h3>❓ Page Non Trouvée</h3>
-                <p id="count-404">{{ stats['404'] }}</p>
-            </div>
+
+        <div class="mt-5 card p-3 bg-white shadow animate__animated animate__fadeInUp">
+            <canvas id="requestsChart"></canvas>
         </div>
     </div>
 
-    <div class="mt-5 card p-3 bg-white shadow animate__animated animate__fadeInUp">
-        <canvas id="requestsChart"></canvas>
-    </div>
-</div>
-
-<script>
-const ctx = document.getElementById('requestsChart').getContext('2d');
-new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['200 OK', '403 Refusé', '404 Not Found'],
-        datasets: [{
-            label: 'Nombre de requêtes',
-            data: [{{ stats['200'] }}, {{ stats['403'] }}, {{ stats['404'] }}],
-            backgroundColor: ['rgba(75, 192, 192, 0.6)','rgba(255, 99, 132, 0.6)','rgba(255, 206, 86, 0.6)']
-        }]
-    },
-});
-</script>
+    <script>
+    const ctx = document.getElementById('requestsChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['200 OK', '403 Refusé', '404 Not Found'],
+            datasets: [{
+                label: 'Nombre de requêtes',
+                data: [{{ stats['200'] }}, {{ stats['403'] }}, {{ stats['404'] }}],
+                backgroundColor: ['rgba(75, 192, 192, 0.6)','rgba(255, 99, 132, 0.6)','rgba(255, 206, 86, 0.6)']
+            }]
+        },
+        options: { responsive: true }
+    });
+    </script>
 </body>
 </html>
 
