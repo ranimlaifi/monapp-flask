@@ -26,7 +26,10 @@ def secret():
     else:
         stats["403"] += 1
         return jsonify({"message": "Accès refusé !"}), 403
-
+@app.errorhandler(404)
+def page_not_found(e):
+    stats["404"] += 1       # <--- AJOUT
+    return "Page non trouvée", 404
 @app.route('/dashboard')
 def dashboard():
     return render_template("dashboard.html", stats=stats)
